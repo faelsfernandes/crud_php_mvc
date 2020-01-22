@@ -1,0 +1,15 @@
+.navbar-transparent
+{
+    background: rgba(0, 0, 0, 0.9);
+	border: none;
+}
+
+.img-brand
+{
+    height: 40px;
+    width: 132px;
+    display: block;
+    background: url('/img/konecta.svg');
+    background-size: contain;
+    border: 1px solid red;
+}
