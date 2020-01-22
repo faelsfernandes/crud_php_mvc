@@ -1,7 +1,7 @@
 <?php
 
 require_once 'app/Core/core.php';
-require_once 'app/Controller/HomeController.php';
+require_once 'app/Controller/AuthorsController.php';
 require_once 'app/Controller/ErrorController.php';
 require_once 'app/Model/AuthorsModel.php';
 require_once 'tools/Connection.php';
@@ -17,4 +17,3 @@ ob_end_clean();
 $pageLoaded = str_replace('{{content_area}}', $result, $template);
 // var_dump($pageLoaded);
 echo $pageLoaded;
-
