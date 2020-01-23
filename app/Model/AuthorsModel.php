@@ -26,4 +26,12 @@ class Authors
         }
         return $result;
     }
+
+    public static function addAuthor($name, $lastname)
+    {
+        $con = Connection::getCon();
+        $data = "INSERT INTO  `Authors` (`name`, `lastname`) VALUES ('$name', '$lastname')";
+        $data = $con->prepare($data);
+        $data->execute();
+    }
 }
