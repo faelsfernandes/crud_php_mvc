@@ -8,7 +8,7 @@ abstract class Connection
     {
         if(self::$connection == null)
         {
-            self::$connection = new PDO('mysql: host=localhost; dbname=crud_mvc_php;', 'fernandes', '56726568'); 
+            self::$connection = new PDO('mysql: host=localhost; dbname=crud_mvc_php;', 'fernandes', '12345678'); 
         }
         return self::$connection;
     }
