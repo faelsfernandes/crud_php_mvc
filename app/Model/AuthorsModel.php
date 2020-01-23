@@ -7,7 +7,7 @@ class Authors
         // try{
         //     $con = Connection::getCon();
         // } catch (PDOException $e) {
-        //     print "Error!: " . $e->getMessage() . "<br/>";
+        //     print "Something went wrong :X " . $e->getMessage() . "<br/>";
         //     die();
         // }
         $con = Connection::getCon();

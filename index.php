@@ -2,8 +2,10 @@
 
 require_once 'app/Core/core.php';
 require_once 'app/Controller/AuthorsController.php';
+require_once 'app/Controller/BooksController.php';
 require_once 'app/Controller/ErrorController.php';
 require_once 'app/Model/AuthorsModel.php';
+require_once 'app/Model/BooksModel.php';
 require_once 'tools/Connection.php';
 
 $template = file_get_contents('app/Template/template.html');

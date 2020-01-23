@@ -4,6 +4,6 @@ class ErrorController
 {
     public function index()
     {
-        echo 'Error';   
+        echo "We don't have home yet :(";   
     }
 }
