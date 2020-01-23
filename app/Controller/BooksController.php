@@ -20,30 +20,31 @@ class BooksController
             echo "</button>";
             echo "</div>";
             echo "<div class='modal-body'>";
-            echo "<form>";
+            echo "<form method='post' action='?page=books&method=insert'>";
             echo "<div class='form-group'>";
             echo "<label for='titleInput'>Name</label>";
-            echo "<input type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
+            echo "<input name='title' type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
             echo "<label for='quantityInput'>Quantity</label>";
-            echo "<input type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
+            echo "<input name='quantity'type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
             echo "</div>";
             echo "<div class='form-group'>";
-            echo "<label for='authorsSelect'>Authors</label>";
-            echo "<select multiple class='form-control' id='authorsSelect'>";
+            echo "<label name='authorid' for='authorsSelect'>Authors</label>";
+            echo "<select multiple name='authorid' class='form-control' id='authorsSelect'>";
             $authors = Authors::selectAuthors();
             foreach($authors as $value)
             {
-                echo "<option>".$value->name." ".$value->lastname."</option>";
+                echo "<option value=".$value->authorid.">".$value->name." ".$value->lastname."</option>";
 
             }
             echo "</select>";
             echo "</div>";
-            echo "</form>";
+            // echo "<input type='submit' name='bla' value='Cadastrar'>";
             echo "</div>";
             echo "<div class='modal-footer'>";
             echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-            echo "<button type='button' class='btn btn-success'>Add</button>";
+            echo "<button type='submit' class='btn btn-success'>Add</button>";
             echo "</div>";
+            echo "</form>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
@@ -75,11 +76,14 @@ class BooksController
                 echo "</tr>";
             }
             echo "</table>";               
-            
-            // var_dump($author);
-            // print_r($books[0]);
         } catch(Exception $e){
             echo $e->getMessage();
         }
+    }
+
+    public function insert()
+    {
+        Books::addBook($_POST['title'], $_POST['quantity'], $_POST['authorid']);
+        header("location:?page=books");
     }
 }
