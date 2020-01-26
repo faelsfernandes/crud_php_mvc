@@ -24,9 +24,9 @@ class BooksController
             echo "<form method='post' action='?page=books&method=insert'>";
             echo "<div class='form-group'>";
             echo "<label for='titleInput'>Name</label>";
-            echo "<input name='title' type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
+            echo "<input required name='title' type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
             echo "<label for='quantityInput'>Quantity</label>";
-            echo "<input name='quantity'type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
+            echo "<input required name='quantity'type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
             echo "</div>";
             echo "<div class='form-group'>";
             echo "<label name='authorid' for='authorsSelect'>Authors</label>";
@@ -63,16 +63,16 @@ class BooksController
             echo "<div class='modal-body'>";
             echo "<form method='post' action='?page=books&method=update'>";
             echo "<div class='form-group'>";
-            // echo "<label for='titleInput'>ID</label>";
-            echo "<input name='updateValue' id='updateValue' type='hidden' class='form-control'>";
+            echo "<label for='idInput'>Book ID</label>";
+            echo "<input required name='id' readonly='readonly' type='text' class='form-control' id='idInput'>";
             echo "<label for='titleInput'>Name</label>";
-            echo "<input name='title' type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
+            echo "<input required name='title' type='text' class='form-control' id='titleInput' placeholder='Ex.: A culpa é das estrelas'>";
             echo "<label for='quantityInput'>Quantity</label>";
-            echo "<input name='quantity'type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
+            echo "<input required name='quantity'type='number' min='1' class='form-control' id='quantityInput' placeholder='Ex.: 10'>";
             echo "</div>";
             echo "<div class='form-group'>";
-            echo "<label name='authorid' for='authorsSelect'>Authors</label>";
-            echo "<select multiple name='authorid' class='form-control' id='authorsSelect'>";
+            echo "<label name='authorid' for='authorsSelectUpdate'>Authors</label>";
+            echo "<select multiple required name='authorid' class='form-control' id='authorsSelectUpdate'>";
             $authors = Authors::selectAuthors();
             foreach($authors as $value)
             {
@@ -115,19 +115,16 @@ class BooksController
                 echo "<td>".$value->quantity."</td>";
                 echo "<td>".$value->authorid."</td>";
                 echo "<td>".$author->name." ".$author->lastname."</td>";
-                echo "<td> <button type='button' class='btn btn-info' id='updateID' data-toggle='modal' data-target='#modalUpdate' value='".$value->bookid."'>Update</button></td>";
-                echo "<td> <button type='button' class='btn btn-danger'>Delete</button></td>";
+                echo "<td><a type='button' class='open-AddBookDialog btn btn-info' id='updateID' data-toggle='modal' data-target='#modalUpdate' data-book-id='".$value->bookid."'>Update</a></td>";
+                echo "<td> <a type='button' class='btn btn-danger' href='?page=books&method=delete&id=$value->bookid'>Delete</a></td>";
                 echo "</tr>";
             }
-            echo "</table>";        
-            // echo "<script>";
-            // // echo "$(document).on('click', '.testeID', function () {";
-            // // echo "var myBookId = $(this).data('id');";
-            // // echo "$('.modal-body #updateValue').val( myBookId );";
-            // // echo "});";
-            // echo "window.document.getElementById('updateValue').value = window.document.getElementById('updateID').value;";
-
-            // echo "</script>";
+            echo "<script>";
+            echo "$('#modalUpdate').on('shown.bs.modal', function (e) {";
+            echo "var bookId = $(e.relatedTarget).data('book-id');";
+            echo "$(e.currentTarget).find('input[name=\"id\"]').val(bookId);";
+            echo "});";
+            echo "</script>";
         } catch(Exception $e){
             echo $e->getMessage();
         }
@@ -141,8 +138,15 @@ class BooksController
 
     public function update()
     {
-        // Books::addBook($_POST['title'], $_POST['quantity'], $_POST['authorid']);
-        // header("location:?page=books");
+        Books::updateBook($_POST['id'], $_POST['title'], $_POST['quantity'], $_POST['authorid']);
+        header("location:?page=books");
         var_dump($_POST);
+    }
+
+    public function delete()
+    {
+        Books::deleteBook($_GET['id']);
+        header("location:?page=books");
+        var_dump($_GET);
     }
 }

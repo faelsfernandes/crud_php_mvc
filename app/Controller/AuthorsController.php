@@ -51,8 +51,10 @@ class AuthorsController
             echo "</button>";
             echo "</div>";
             echo "<div class='modal-body'>";
-            echo "<form method='post' action='?page=authors&method=insert'>";
+            echo "<form method='post' action='?page=authors&method=update'>";
             echo "<div class='form-group'>";
+            echo "<label for='idInput'>Author ID</label>";
+            echo "<input required name='id' readonly='readonly' type='text' class='form-control' id='idInput'>";
             echo "<label for='nameInput'>Name</label>";
             echo "<input name='name' type='text' class='form-control' id='nameInput' placeholder='Ex.: José'>";
             echo "<label for='lastnameInput'>Last Name</label>";
@@ -61,7 +63,7 @@ class AuthorsController
             echo "</div>";
             echo "<div class='modal-footer'>";
             echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-            echo "<button type='submit' class='btn btn-success'>Add</button>";
+            echo "<button type='submit' class='btn btn-info'>Update</button>";
             echo "</div>";
             echo "</form>";
 
@@ -86,11 +88,18 @@ class AuthorsController
                 echo "<td>".$value->authorid."</td>";
                 echo "<td>".$value->name."</td>";
                 echo "<td>".$value->lastname."</td>";
-                echo "<td> <button type='button' class='btn btn-info' data-toggle='modal' data-target='#modalUpdateAuthor'>Update</button></td>";
-                echo "<td> <button type='button' class='btn btn-danger'>Delete</button></td>";
+                echo "<td> <button type='button' class='btn btn-info' data-toggle='modal' data-target='#modalUpdateAuthor' data-author-id='".$value->authorid."'>Update</button></td>";
+                echo "<td> <a type='button' class='btn btn-danger' href='?page=authors&method=delete&id=$value->authorid'>Delete</a></td>";
                 echo "</tr>";
             }
-            echo "</table>";                
+            echo "</table>";     
+            
+            echo "<script>";
+            echo "$('#modalUpdateAuthor').on('shown.bs.modal', function (e) {";
+            echo "var authorId = $(e.relatedTarget).data('author-id');";
+            echo "$(e.currentTarget).find('input[name=\"id\"]').val(authorId);";
+            echo "});";
+            echo "</script>";
 
             // print_r($authors[0]);
         } catch(Exception $e){
@@ -102,5 +111,19 @@ class AuthorsController
     {
         Authors::addAuthor($_POST['name'], $_POST['lastname']);
         header("location:?page=authors");
+    }
+
+    public function update()
+    {
+        Authors::updateAuthor($_POST['id'], $_POST['name'], $_POST['lastname']);
+        header("location:?page=authors");
+        var_dump($_POST);
+    }
+
+    public function delete()
+    {
+        Authors::deleteAuthor($_GET['id']);
+        header("location:?page=authors");
+        var_dump($_GET);
     }
 }
