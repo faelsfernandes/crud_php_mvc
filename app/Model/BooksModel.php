@@ -55,11 +55,19 @@ class Books
         $data->execute();
     }
 
-    // public static function updateBook($title, $quantity, $authorid)
-    // {
-    //     $con = Connection::getCon();
-    //     $data = "UPDATE  `Books` SET title='$title', quantity=$quantity, authorid=$authorid";
-    //     $data = $con->prepare($data);
-    //     $data->execute();
-    // }
+    public static function updateBook($bookid, $title, $quantity, $authorid)
+    {
+        $con = Connection::getCon();
+        $data = "UPDATE  `Books` SET `title`='$title', `quantity`=$quantity, `authorid`=$authorid WHERE `bookid` = $bookid";
+        $data = $con->prepare($data);
+        $data->execute();
+    }
+
+    public static function deleteBook($bookid)
+    {
+        $con = Connection::getCon();
+        $data = "DELETE FROM  `Books` WHERE `bookid` = $bookid";
+        $data = $con->prepare($data);
+        $data->execute();
+    }
 }   

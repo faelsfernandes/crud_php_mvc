@@ -34,4 +34,20 @@ class Authors
         $data = $con->prepare($data);
         $data->execute();
     }
+
+    public static function updateAuthor($authorid, $name, $lastname)
+    {
+        $con = Connection::getCon();
+        $data = "UPDATE  `Authors` SET `name`='$name', `lastname`=$lastname WHERE `authorid` = $authorid";
+        $data = $con->prepare($data);
+        $data->execute();
+    }
+
+    public static function deleteAuthor($authorid)
+    {
+        $con = Connection::getCon();
+        $data = "DELETE FROM  `Authors` WHERE `authorid` = $authorid";
+        $data = $con->prepare($data);
+        $data->execute();
+    }
 }
