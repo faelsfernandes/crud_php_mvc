@@ -21,16 +21,16 @@ class AuthorsController
             echo "</button>";
             echo "</div>";
             echo "<div class='modal-body'>";
-            // echo "<form class='dropzone' method='post' action='?page=authors&method=insert'>";
-            echo "<form class='dropzone' method='post' action='upload.php'>";
-            // echo "<div class='form-group'>";
-            // echo "<label for='nameInput'>Name</label>";
-            // echo "<input required name='name' type='text' class='form-control' id='nameInput' placeholder='Ex.: José'>";
-            // echo "<label for='lastnameInput'>Last Name</label>";
-            // echo "<input required name='lastname' type='text' class='form-control' id='lastnameInput' placeholder='Ex.: da Silva'>";
-            
-            // echo "</div>";
-            // echo "</div>";
+            echo "<form method='post' action='?page=authors&method=insert'>";
+            // echo "<form class='dropzone' method='post' action='upload.php'>";
+            echo "<div class='form-group'>";
+            echo "<label for='nameInput'>Name</label>";
+            echo "<input required name='name' type='text' class='form-control' id='nameInput' placeholder='Ex.: José'>";
+            echo "<label for='lastnameInput'>Last Name</label>";
+            echo "<input required name='lastname' type='text' class='form-control' id='lastnameInput' placeholder='Ex.: da Silva'>";
+            // 
+            echo "</div>";
+            echo "</div>";
             echo "<div class='modal-footer'>";
             
             echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
@@ -111,9 +111,9 @@ class AuthorsController
 
     public function insert()
     {
-        var_dump($_POST);
-        // Authors::addAuthor($_POST['name'], $_POST['lastname']);
-        // header("location:?page=authors");
+        // var_dump($_POST);
+        Authors::addAuthor($_POST['name'], $_POST['lastname']);
+        header("location:?page=authors");
     }
 
     public function update()
